@@ -1,7 +1,7 @@
 <script>
     import emotion from 'emotion/dist/emotion.umd.min.js';
-
     const { css } = emotion;
+
     const steps__cell = css`
         display: flex;
         align-content: center;
@@ -18,7 +18,9 @@
         steps: [
             {
                 order: 1,
-                alias: ['Тоника', 'I', 'T'],
+                roman: 'I',
+                type: 'minor',
+                name: 'Тоника',
                 move: {
                     up: 2,
                     down: 2
@@ -26,7 +28,9 @@
             }
             ,{
                 order: 2,
-                alias: ['верхняя вводная', 'II'],
+                roman: 'II',
+                type: 'minor',
+                name: 'Верхняя вводная',
                 move: {
                     up: 1,
                     down: 2
@@ -34,35 +38,45 @@
             }
             ,{
                 order: 3,
-                alias: ['верхняя медианта', 'III'],
+                roman: 'III',
+                type: 'major',
+                name: 'Верхняя медианта',
                 move: {
                     up: 2,
                     down: 1
                 } 
             },{
                 order: 4,
-                alias: ['субдоминанта', 'IV', 'S'],
+                roman: 'IV',
+                type: 'minor',
+                name: 'Субдоминанта', 
                 move: {
                     up: 2,
                     down: 2
                 } 
             },{
                 order: 5,
-                alias: ['доминанта', 'V', 'D'],
+                roman: 'V',
+                type: 'minor',
+                name: 'Доминанта',
                 move: {
                     up: 1,
                     down: 2
                 } 
             },{
                 order: 6,
-                alias: ['нижняя медианта', 'VI'],
+                roman: 'VI',
+                type: 'major',
+                name: 'Нижняя медианта',
                 move: {
                     up: 2,
                     down: 1
                 } 
             },{
                 order: 7,
-                alias: ['нижняя вводная', 'VII'],
+                roman: 'VII',
+                type: 'major',
+                name: 'Нижняя вводная',
                 move: {
                     up: 2,
                     down: 2
@@ -70,8 +84,12 @@
             }
         ]
     };
-
-    $: drowGuitarCells = (startStep = 1) => {
+    $: findKey = (key, order) => {
+        let harmony = ['A', 'H', 'C', 'D', 'E', 'F', 'G', 'A', 'H', 'C', 'D', 'E', 'F', 'G'];
+        let indexOf = harmony.indexOf(key);
+        return harmony[--order + indexOf];
+    };
+    $: drowString = (key = 'A', startStep = 1) => {
 
         let steps = [...state.steps];
         let allHalfs = steps.reduce((acc, curr) => acc + curr.move.up, 0);
@@ -84,13 +102,11 @@
 
         let string = '';
         for (let step of steps) {
-            string += `<div class="${steps__cell}">${step.alias[1]}</div>`;
+            string += `<div class="${steps__cell}">${findKey(key, step.order)}</div>`;
             if(step.move.up === 2){
                 string += `<div class="${steps__cell} ${steps__cell_blank}"></div>`
             }
-
         }
-
         return string
     }
 // TSD
@@ -105,29 +121,29 @@
 
 {#each state.steps as step}
 <div class="alias">
-    <div class="alias__rom">{step.alias[1]}</div>
-    <div>{step.alias[0]} {step.alias[2] ? step.alias[2] : ''}</div>
+    <div class="alias__rom">{step.roman}</div>
+    <div>{step.name} / {step.type}</div>
 </div>
 {/each}
 
 
 <div class="steps">
-    {@html drowGuitarCells(1)}
+    {@html drowString('E', 1)}
 </div>
 <div class="steps">
-    {@html drowGuitarCells(5)}
+    {@html drowString('E', 5)}
 </div>
 <div class="steps">
-    {@html drowGuitarCells(3)}
+    {@html drowString('E', 3)}
 </div>
 <div class="steps">
-    {@html drowGuitarCells(7)}
+    {@html drowString('E', 7)}
 </div>
 <div class="steps">
-    {@html drowGuitarCells(4)}
+    {@html drowString('E', 4)}
 </div>
 <div class="steps">
-    {@html drowGuitarCells(1)}
+    {@html drowString('E', 1)}
 </div>
 <style>
 .steps {
