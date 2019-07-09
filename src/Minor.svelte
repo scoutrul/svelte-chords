@@ -71,17 +71,15 @@
         ]
     };
 
-    $: drowGuitarCells = (offset = 0) => {
+    $: drowGuitarCells = (startStep = 1) => {
 
         let steps = [...state.steps];
         let allHalfs = steps.reduce((acc, curr) => acc + curr.move.up, 0);
 
         let shifted ;
-        for(let i = allHalfs*2+1; i >= allHalfs - offset; i--){
+        for(let i = allHalfs*2; i >= allHalfs - startStep; i--){
             shifted = steps.shift();
             steps = [...steps, shifted];
-            // console.log(steps);
-            // console.log(shifted);
         }
 
         let string = '';
@@ -90,6 +88,7 @@
             if(step.move.up === 2){
                 string += `<div class="${steps__cell} ${steps__cell_blank}"></div>`
             }
+
         }
 
         return string
@@ -111,23 +110,24 @@
 </div>
 {/each}
 
+
 <div class="steps">
-    {@html drowGuitarCells(0)}
+    {@html drowGuitarCells(1)}
 </div>
 <div class="steps">
     {@html drowGuitarCells(5)}
 </div>
 <div class="steps">
-    {@html drowGuitarCells(10)}
+    {@html drowGuitarCells(3)}
 </div>
 <div class="steps">
-    {@html drowGuitarCells(15)}
+    {@html drowGuitarCells(7)}
 </div>
 <div class="steps">
-    {@html drowGuitarCells(16)}
+    {@html drowGuitarCells(4)}
 </div>
 <div class="steps">
-    {@html drowGuitarCells(21)}
+    {@html drowGuitarCells(1)}
 </div>
 <style>
 .steps {
