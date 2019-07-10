@@ -3,6 +3,8 @@
     const { css } = emotion;
 	let state = {
         name: 'minor',
+        harmony: ['A', 'H', 'C', 'D', 'E', 'F', 'G',],
+        currentChord: 'A',
         steps: [
             {
                 order: 1,
@@ -80,11 +82,16 @@
         background: #F4F4F4;
         outline: 1px solid #ccc;
     `;
-    const step_I = `
-        background: #FCD;
-    `;
+    $: getChordButtonStyles = (chord) => {
+        if(chord === state.currentChord) {
+            return css`
+                background: #DDD;
+            `
+        }
+        // return stepStyles[state.steps[state.harmony.indexOf(chord)].roman]
+    };
 
-    const steps__cell_blank = css `
+    const steps__cell_blank = css`
         background: #FFF;
     `;
 
@@ -98,15 +105,18 @@
         VII: css`background: #EFEFEF`,
     };
 
+    $: onChord = (e, chord) => {
+        state.currentChord = chord;
+    };
     $: findKey = (key, order) => {
-        let harmony = ['A', 'H', 'C', 'D', 'E', 'F', 'G', 'A', 'H', 'C', 'D', 'E', 'F', 'G'];
+        let harmony = [...state.harmony, ...state.harmony];
         let indexOf = harmony.indexOf(key);
         return harmony[--order + indexOf];
     };
     $: getStepStyles = (roman) => {
         return stepStyles[roman];
     };
-    $: drowString = (key = 'A', startStep = 1) => {
+    $: renderString = (key = 'A', startStep = 1) => {
         let steps = [...state.steps];
         let allHalfs = steps.reduce((acc, curr) => acc + curr.move.up, 0);
 
@@ -144,23 +154,33 @@
 
 
 <div class="steps">
-    {@html drowString('E', 1)}
+    {@html renderString('E', 1)}
 </div>
 <div class="steps">
-    {@html drowString('E', 5)}
+    {@html renderString('E', 5)}
 </div>
 <div class="steps">
-    {@html drowString('E', 3)}
+    {@html renderString('E', 3)}
 </div>
 <div class="steps">
-    {@html drowString('E', 7)}
+    {@html renderString('E', 7)}
 </div>
 <div class="steps">
-    {@html drowString('E', 4)}
+    {@html renderString('E', 4)}
 </div>
 <div class="steps">
-    {@html drowString('E', 1)}
+    {@html renderString('E', 1)}
 </div>
+
+<div>
+    <h2>Аккорды</h2>
+    <div>
+        {#each state.harmony as chord}
+            <button class={getChordButtonStyles(chord)} on:click={e => onChord(e, chord)}>{chord} {state.name}</button>
+        {/each}
+    </div>
+</div>
+
 <style>
 .steps {
     display: flex;
