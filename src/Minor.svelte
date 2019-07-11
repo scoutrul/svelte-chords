@@ -1,79 +1,10 @@
 <script>
     import emotion from 'emotion/dist/emotion.umd.min.js';
+    
+    export let state = {};
+    let lad = "minor";
+
     const { css } = emotion;
-	let state = {
-        name: 'minor',
-        harmony: ['A', 'H', 'C', 'D', 'E', 'F', 'G',],
-        currentChord: 'A',
-        steps: [
-            {
-                order: 1,
-                roman: 'I',
-                type: 'minor',
-                name: 'Тоника',
-                move: {
-                    up: 2,
-                    down: 2
-                } 
-            }
-            ,{
-                order: 2,
-                roman: 'II',
-                type: 'minor',
-                name: 'Верхняя вводная',
-                move: {
-                    up: 1,
-                    down: 2
-                } 
-            }
-            ,{
-                order: 3,
-                roman: 'III',
-                type: 'major',
-                name: 'Верхняя медианта',
-                move: {
-                    up: 2,
-                    down: 1
-                } 
-            },{
-                order: 4,
-                roman: 'IV',
-                type: 'minor',
-                name: 'Субдоминанта', 
-                move: {
-                    up: 2,
-                    down: 2
-                } 
-            },{
-                order: 5,
-                roman: 'V',
-                type: 'minor',
-                name: 'Доминанта',
-                move: {
-                    up: 1,
-                    down: 2
-                } 
-            },{
-                order: 6,
-                roman: 'VI',
-                type: 'major',
-                name: 'Нижняя медианта',
-                move: {
-                    up: 2,
-                    down: 1
-                } 
-            },{
-                order: 7,
-                roman: 'VII',
-                type: 'major',
-                name: 'Нижняя вводная',
-                move: {
-                    up: 2,
-                    down: 2
-                } 
-            }
-        ]
-    };
     const steps__cell = css`
         display: flex;
         align-content: center;
@@ -82,19 +13,10 @@
         background: #F4F4F4;
         outline: 1px solid #ccc;
     `;
-    $: getChordButtonStyles = (chord) => {
-        if(chord === state.currentChord) {
-            return css`
-                background: #DDD;
-            `
-        }
-        // return stepStyles[state.steps[state.harmony.indexOf(chord)].roman]
-    };
-
     const steps__cell_blank = css`
-        background: #FFF;
-    `;
-
+            background: #FFF;
+        `;
+    
     const stepStyles = {
         I: css`background: #9dfffe`,
         II: css`background: #fd9cfd`,
@@ -104,24 +26,43 @@
         VI: css`background: #ff9d9e`,
         VII: css`background: #EFEFEF`,
     };
+    $: getChordButtonStyles = (chord) => {
+        if(chord === state.currentChord) {
+            return css`
+                background: #DDD;
+            `
+        }
+    };
+    $: getLadButtonStyle = (lad) => {
+        if(lad === state.currentLad) {
+            return css`
+                background: #DDD;
+            `
+        }
+        return css``
+    };
 
-    $: onChord = (e, chord) => {
+    function onChangeLad(e, lad) {
+        state.currentLad = lad;
+    };
+    function onChangeChord(e, chord) {
         state.currentChord = chord;
     };
-    $: findKey = (key, order) => {
+
+    function findKey(key, order) {
         let harmony = [...state.harmony, ...state.harmony];
         let indexOf = harmony.indexOf(key);
         return harmony[--order + indexOf];
     };
-    $: getStepStyles = (roman) => {
+    function getStepStyles(roman) {
         return stepStyles[roman];
     };
-    $: renderString = (key = 'A', startStep = 1) => {
-        let steps = [...state.steps];
+    function renderString(key = 'A', stepOffset = 1){
+        let steps = [...state.steps.minor];
         let allHalfs = steps.reduce((acc, curr) => acc + curr.move.up, 0);
 
         let shifted ;
-        for(let i = allHalfs*2; i >= allHalfs - startStep; i--){
+        for(let i = allHalfs*2; i >= allHalfs - stepOffset; i--){
             shifted = steps.shift();
             steps = [...steps, shifted];
         }
@@ -143,9 +84,9 @@
 // доминантовое трезвучие V VII II
 </script>
 
-<h1>{state.name}</h1>
+<h1>{state.currentChord} {state.currentLad}</h1>
 
-{#each state.steps as step}
+{#each state.steps.minor as step}
 <div class="alias">
     <div class="{steps__cell} {getStepStyles(step.roman)}" >{step.roman}</div>
     <div>&nbsp; {step.name} / {step.type}</div>
@@ -174,9 +115,11 @@
 
 <div>
     <h2>Аккорды</h2>
+    <button class={getLadButtonStyle('minor')} on:mousedown={e => onChangeLad(e, 'minor')}>minor</button>
+    <button class={getLadButtonStyle('major')} on:mousedown={e => onChangeLad(e, 'major')}>major</button>
     <div>
         {#each state.harmony as chord}
-            <button class={getChordButtonStyles(chord)} on:click={e => onChord(e, chord)}>{chord} {state.name}</button>
+            <button class={getChordButtonStyles(chord)} on:mousedown={e => onChangeChord(e, chord)}>{chord}</button>
         {/each}
     </div>
 </div>
