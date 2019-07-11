@@ -24,7 +24,7 @@
         IV: css`background: #fffe9f`,
         V: css`background: #9eff9d`,
         VI: css`background: #ff9d9e`,
-        VII: css`background: #EFEFEF`,
+        VII: css`background: #ffd508`,
     };
     $: getChordButtonStyles = (chord) => {
         if(chord === state.currentChord) {
@@ -49,7 +49,7 @@
         state.currentChord = chord;
     };
 
-    function findKey(key, order) {
+    $: findKey = (key, order) => {
         let harmony = [...state.harmony, ...state.harmony];
         let indexOf = harmony.indexOf(key);
         return harmony[--order + indexOf];
@@ -57,8 +57,14 @@
     function getStepStyles(roman) {
         return stepStyles[roman];
     };
-    function renderString(key = 'A', stepOffset = 1){
-        let steps = [...state.steps.minor];
+    $: renderString = (key = 'A', stepOffset = 1) => {
+        let steps = [];
+        if (state.currentLad === 'minor') {
+            steps = [...state.steps.minor];
+        }
+        else {
+            steps = [...state.steps.major];
+        }
         let allHalfs = steps.reduce((acc, curr) => acc + curr.move.up, 0);
 
         let shifted ;
@@ -70,9 +76,6 @@
         let string = '';
         for (let step of steps) {
             string += `<div class="${steps__cell} ${getStepStyles(step.roman)}">${findKey(key, step.order)}</div>`;
-            if(step.move.up === 2){
-                string += `<div class="${steps__cell} ${steps__cell_blank}"></div>`
-            }
         }
         return string
     }
@@ -95,22 +98,22 @@
 
 
 <div class="steps">
-    {@html renderString('E', 1)}
+    {@html renderString('E', 6)}
 </div>
 <div class="steps">
-    {@html renderString('E', 5)}
+    {@html renderString('E', 13)}
 </div>
 <div class="steps">
-    {@html renderString('E', 3)}
+    {@html renderString('E', 9)}
 </div>
 <div class="steps">
-    {@html renderString('E', 7)}
+    {@html renderString('E', 16)}
 </div>
 <div class="steps">
-    {@html renderString('E', 4)}
+    {@html renderString('E', 11)}
 </div>
 <div class="steps">
-    {@html renderString('E', 1)}
+    {@html renderString('E', 6)}
 </div>
 
 <div>
