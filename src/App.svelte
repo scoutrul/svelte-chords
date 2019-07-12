@@ -1,5 +1,7 @@
+<Gamma />
+
 <script>
-  import Minor from "./Minor.svelte";
+  import Gamma from "./Gamma/index.svelte";
 
   let state = {
     name: "Chords",
@@ -263,6 +265,7 @@
       ]
     }
   };
+  window.state = state;
 </script>
 
 <style>
@@ -270,5 +273,3 @@
     color: purple;
   }
 </style>
-
-<Minor {state} />
