@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "emotion": "^10.0.14",
+    "rollup-plugin-import-resolver": "^1.0.4",
     "sirv-cli": "^0.4.4"
   },
   "scripts": {

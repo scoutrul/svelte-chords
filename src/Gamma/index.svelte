@@ -12,7 +12,7 @@
 </div>
 <script>
     
-    import GuitarString from './GuitarString.svelte';
+    import GuitarString from '~/Gamma/GuitarString.svelte';
     import ControlButtons from './ControlButtons.svelte';
     import MetaInfo from './MetaInfo.svelte';
     import emotion from 'emotion/dist/emotion.umd.min.js';
