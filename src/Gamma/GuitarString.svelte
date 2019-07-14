@@ -1,45 +1,21 @@
-<div class="steps">
-    {@html renderString(key, offset)}
-</div>
+{@html renderString(key, offset)}
 
 <script>
-    import emotion from 'emotion/dist/emotion.umd.min.js';
-        
-    let state = window.state;
+    import { steps__styles, steps__cell, steps__first, steps__container } from '~/styles/index.js';
+    import { getStepStyles } from '~/styles/index.js';
+    export let state;
     export let key;
     export let offset;
-
-    const { css } = emotion;
-    const steps__cell = css`
-        display: flex;
-        align-content: center;
-        justify-content: center;
-        width: 80px;
-        background: #F4F4F4;
-        outline: 1px solid #ccc;
-    `;
-
-    const stepStyles = {
-        I: css`background: #9dfffe`,
-        II: css`background: #fd9cfd`,
-        III: css`background: #cccdfd`,
-        IV: css`background: #fffe9f`,
-        V: css`background: #9eff9d`,
-        VI: css`background: #ff9d9e`,
-        VII: css`background: #ffd508`,
-    };
 
     $: findKey = (key, order) => {
         let harmony = [...state.harmony, ...state.harmony];
         let indexOf = harmony.indexOf(key);
         return harmony[--order + indexOf];
     };
-    $: getStepStyles = (roman) => {
-        return stepStyles[roman];
-    };
+
     $: renderString = (key = 'A', stepOffset = 1) => {
         let steps = [];
-        if (state.currentLad === 'minor') {
+        if (state.currentLad === 'minor') {// TODO
             steps = [...state.steps.minor];
         }
         else {
@@ -50,23 +26,22 @@
         let shifted ;
         for(let i = allHalfs*2; i >= allHalfs - stepOffset; i--){
             shifted = steps.shift();
-            steps = [...steps, shifted];
+            steps = [...steps, shifted]
         }
 
         let string = '';
+        let first = true;
+            string += `<div class="${steps__container}">`;
         for (let step of steps) {
-            string += `<div class="${steps__cell} ${getStepStyles(step.roman)}">${findKey(key, step.order)}</div>`;
+            string += `<div class="${steps__cell} ${getStepStyles(step.roman)} ${first ? steps__first : '' }">${findKey(key, step.order)}</div>`;
+            first = false;
         }
+        string += '</div>'
         return string
     }
 
 </script>
 
 <style>
-
-.steps {
-    display: flex;
-    margin: 14px 0;
-}
 
 </style>

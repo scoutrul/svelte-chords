@@ -1,4 +1,4 @@
-<Gamma />
+<Gamma {state} />
 
 <script>
   import Gamma from "./Gamma/index.svelte";
@@ -9,11 +9,11 @@
     lads: [
       {
         name: "minor",
-        hamma: [2, 1, 2, 2, 1, 2, 2]
+        gamma: [2, 1, 2, 2, 1, 2, 2]
       },
       {
         name: "major",
-        hamma: [2, 2, 1, 2, 2, 2, 1]
+        gamma: [2, 2, 1, 2, 2, 2, 1]
       }
     ],
     currentChord: "A",
@@ -265,11 +265,11 @@
       ]
     }
   };
-  window.state = state;
 </script>
 
-<style>
-  h1 {
-    color: purple;
-  }
-</style>
+// TSD
+// тоника субдоминанта доминанта
+// устойчивые ступени I III V
+// тоническое трезвучие I IV V (главные ступени)
+// субдоминантовое трезвучие IV VI I
+// доминантовое трезвучие V VII II

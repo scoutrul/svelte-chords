@@ -11,7 +11,7 @@
 
 <script>
     import emotion from 'emotion/dist/emotion.umd.min.js';
-    let state = window.state;
+    export let state;
 
     const { css } = emotion;
 
@@ -36,13 +36,6 @@
         state.currentChord = chord;
     };
 
-
-// TSD
-// тоника субдоминанта доминанта
-// устойчивые ступени I III 
-// тоническое трезвучие I IV V (главные ступени)
-// субдоминантовое трезвучие IV VI I
-// доминантовое трезвучие V VII II
 </script>
 
 <style>
