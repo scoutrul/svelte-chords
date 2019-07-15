@@ -27,15 +27,13 @@
             steps = [...steps, shifted]
         }
 
-        let string = '';
-        let first = true;
-            string += `<div class="${steps__container}">`;
+        let string = `<div class="${steps__container}">`;
+        let isFirst = true;
         for (let step of steps) {
-            string += `<div class="${cx(steps__cell, first ? steps__first : '', getStepStyles(step.roman))}">${findKey(key, step.order)}</div>`;
-            first = false;
+            string += `<div class="${cx(steps__cell, isFirst ? steps__first : '', getStepStyles(step.roman))}">${findKey(key, step.order)}</div>`;
+            isFirst = false;
         }
-        string += '</div>'
-        return string
+        return string += '</div>';
     }
 
 </script>
