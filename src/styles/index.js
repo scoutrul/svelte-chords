@@ -15,7 +15,7 @@ export const steps__cell = css`
     align-content: center;
     justify-content: center;
     width: 80px;
-    // background: #F4F4F4;
+    background: inherit;
     outline: 2px solid #DDD;
     outline-offset: -1px;
 `;
@@ -27,6 +27,4 @@ export const steps__container = css`
     margin: 14px;
 `;
 
-export const getStepStyles = (roman) => {
-    return steps__styles[roman];
-};
+export const getStepStyles = (roman) => steps__styles[roman];

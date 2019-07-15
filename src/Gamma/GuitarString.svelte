@@ -1,26 +1,24 @@
-{@html renderString(key, offset)}
+<div>
+    {@html renderString(key, offset)}
+</div>
 
 <script>
-    import { steps__styles, steps__cell, steps__first, steps__container } from '~/styles/index.js';
-    import { getStepStyles } from '~/styles/index.js';
-    export let state;
+    import { storage } from '~/store/index.js';
+    import { steps__styles, steps__cell, steps__first, steps__container, getStepStyles } from '~/styles/index.js';
+    import emotion from 'emotion/dist/emotion.umd.min.js';
+    const { cx } = emotion;
     export let key;
     export let offset;
 
     $: findKey = (key, order) => {
-        let harmony = [...state.harmony, ...state.harmony];
+        let harmony = [...$storage.harmony, ...$storage.harmony];
         let indexOf = harmony.indexOf(key);
         return harmony[--order + indexOf];
     };
 
     $: renderString = (key = 'A', stepOffset = 1) => {
-        let steps = [];
-        if (state.currentLad === 'minor') {// TODO
-            steps = [...state.steps.minor];
-        }
-        else {
-            steps = [...state.steps.major];
-        }
+        let steps =  [...$storage.steps[$storage.currentLad]];
+      
         let allHalfs = steps.reduce((acc, curr) => acc + curr.move.up, 0);
 
         let shifted ;
@@ -33,7 +31,7 @@
         let first = true;
             string += `<div class="${steps__container}">`;
         for (let step of steps) {
-            string += `<div class="${steps__cell} ${getStepStyles(step.roman)} ${first ? steps__first : '' }">${findKey(key, step.order)}</div>`;
+            string += `<div class="${cx(steps__cell, first ? steps__first : '', getStepStyles(step.roman))}">${findKey(key, step.order)}</div>`;
             first = false;
         }
         string += '</div>'

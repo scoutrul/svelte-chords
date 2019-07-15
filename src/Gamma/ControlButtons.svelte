@@ -1,39 +1,32 @@
 <div>
     <h2>Аккорды</h2>
-    <button class={getLadButtonStyle('minor')} on:mousedown={e => onChangeLad(e, 'minor')}>minor</button>
-    <button class={getLadButtonStyle('major')} on:mousedown={e => onChangeLad(e, 'major')}>major</button>
+    <button class={getLadButtonStyle('minor')} on:mousedown={e => storage.onChangeLad('minor')}>minor</button>
+    <button class={getLadButtonStyle('major')} on:mousedown={e => storage.onChangeLad('major')}>major</button>
     <div>
-        {#each state.harmony as chord}
-            <button class={getChordButtonStyles(chord)} on:mousedown={e => onChangeChord(e, chord)}>{chord}</button>
+        {#each $storage.harmony as chord}
+            <button class={getChordButtonStyles(chord)} on:mousedown={e => storage.onChangeChord(chord)}>{chord}</button>
         {/each}
     </div>
 </div>
 
 <script>
     import emotion from 'emotion/dist/emotion.umd.min.js';
-    export let state;
+    import { storage } from '~/store/index.js';
 
     const { css } = emotion;
 
     $: getChordButtonStyles = (chord) => {
-        if(chord === state.currentChord) {
+        if(chord === $storage.currentChord) {
             return css`
                 background: #DDD;
             `}
     };
     $: getLadButtonStyle = (lad) => {
-        if(lad === state.currentLad) {
+        if(lad === $storage.currentLad) {
             return css`
                 background: #DDD;
             `}
         return css``
-    };
-
-    $: onChangeLad = (e, lad) => {
-        state.currentLad = lad;
-    };
-    $: onChangeChord = (e, chord) => {
-        state.currentChord = chord;
     };
 
 </script>

@@ -1,10 +1,10 @@
 <div>
-    <h1>{state.currentChord} {state.currentLad}</h1>
+    <h1>{$storage.currentChord} {$storage.currentLad}</h1>
 
-    {#each state.steps[state.currentLad] as step}
+    {#each $storage.steps[$storage.currentLad] as step}
         {#if step.roman}
         <div style="display: flex">
-            <div class="{steps__cell} {getStepStyles(step.roman)}" >{step.roman}</div>
+            <div class="{cx(steps__cell, getStepStyles(step.roman))}" >{step.roman}</div>
             <div>&nbsp; {step.name} / {step.type}</div>
         </div>
         {/if}
@@ -12,11 +12,10 @@
 
 </div>
 <script>
-
+    import { storage } from '~/store/index.js';
+    import { getStepStyles, steps__cell } from '~/styles/index.js';
     import emotion from 'emotion/dist/emotion.umd.min.js';
-    import { getStepStyles, steps__cell, stepStyles } from '~/styles/index.js';
-    export let state;
-
+    const { cx } = emotion;
 </script>
 
 <style>
