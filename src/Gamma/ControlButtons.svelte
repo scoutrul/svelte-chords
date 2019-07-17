@@ -32,9 +32,4 @@
 </script>
 
 <style>
-
-.alias {
-    display: flex;
-}
-
 </style>

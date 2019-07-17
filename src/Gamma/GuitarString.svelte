@@ -11,26 +11,29 @@
     export let offset;
 
     $: findKey = (key, order) => {
-        let { currentKey } = $storage; //todo  отрисовать ступени относительно аккорда
+        let { currentKey } = $storage; 
+        //todo  отрисовать ступени относительно аккорда
+        
         let harmony = [...$storage.harmony, ...$storage.harmony];
         let indexOf = harmony.indexOf(key);
         return harmony[--order + indexOf];
     };
 
     $: renderString = (key = 'A', stepOffset = 1) => {
-        let steps =  [...$storage.steps[$storage.currentLad]];
+        let pitches =  [...$storage.pitches[$storage.currentLad]];
 
-        let allHalfs = steps.reduce((acc, curr) => acc + curr.move.up, 0);
+        let gammaHalfs = pitches.reduce((acc, curr) => acc + curr.move.up, 0);
 
         let shifted ;
-        for(let i = allHalfs*2; i >= allHalfs - stepOffset; i--){
-            shifted = steps.shift();
-            steps = [...steps, shifted]
+        // начать с тоники
+        for(let i = gammaHalfs*2; i >= gammaHalfs - stepOffset; i--){
+            shifted = pitches.shift();
+            pitches = [...pitches, shifted]
         }
 
         let string = `<div class="${steps__container}">`;
         let isFirst = true;
-        for (let step of steps) {
+        for (let step of pitches) {
             string += `<div class="${cx(steps__cell, isFirst ? steps__first : '', getStepStyles(step.roman))}">${findKey(key, step.order)}</div>`;
             isFirst = false;
         }

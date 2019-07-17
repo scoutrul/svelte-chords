@@ -2,7 +2,7 @@
 <div style="display: flex;">
     <div style="display: flex; flex-direction: column;">
         <h2>Ступени</h2>
-        {#each $storage.steps[$storage.currentLad] as {roman, name, type}}
+        {#each $storage.pitches[$storage.currentLad] as {roman, name, type}}
             {#if roman}
             <div style="display: flex">
                 <div class="{cx(steps__cell, getStepStyles(roman))}" >{roman}</div>

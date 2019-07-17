@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 
 let metaState = {
-    steps: {
+    pitches: {
         minor: [
             {
             order: 1,
