@@ -11,6 +11,7 @@
     export let offset;
 
     $: findKey = (key, order) => {
+        let { currentKey } = $storage; //todo  отрисовать ступени относительно аккорда
         let harmony = [...$storage.harmony, ...$storage.harmony];
         let indexOf = harmony.indexOf(key);
         return harmony[--order + indexOf];
@@ -18,7 +19,7 @@
 
     $: renderString = (key = 'A', stepOffset = 1) => {
         let steps =  [...$storage.steps[$storage.currentLad]];
-      
+
         let allHalfs = steps.reduce((acc, curr) => acc + curr.move.up, 0);
 
         let shifted ;

@@ -3,8 +3,8 @@
     <button class={getLadButtonStyle('minor')} on:mousedown={e => storage.onChangeLad('minor')}>minor</button>
     <button class={getLadButtonStyle('major')} on:mousedown={e => storage.onChangeLad('major')}>major</button>
     <div>
-        {#each $storage.harmony as chord}
-            <button class={getChordButtonStyles(chord)} on:mousedown={e => storage.onChangeChord(chord)}>{chord}</button>
+        {#each $storage.harmony as key}
+            <button class={getChordButtonStyles(key)} on:mousedown={e => storage.onChangeKey(key)}>{key}</button>
         {/each}
     </div>
 </div>
@@ -15,8 +15,8 @@
 
     const { css } = emotion;
 
-    $: getChordButtonStyles = (chord) => {
-        if(chord === $storage.currentChord) {
+    $: getChordButtonStyles = (key) => {
+        if(key === $storage.currentKey) {
             return css`
                 background: #DDD;
             `}

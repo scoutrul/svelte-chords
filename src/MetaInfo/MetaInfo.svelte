@@ -1,6 +1,7 @@
-<h1>{$storage.currentChord} {$storage.currentLad}</h1>
+<h1>{$storage.currentChord}</h1>
 <div style="display: flex;">
     <div style="display: flex; flex-direction: column;">
+        <h2>Ступени</h2>
         {#each $storage.steps[$storage.currentLad] as {roman, name, type}}
             {#if roman}
             <div style="display: flex">
@@ -11,6 +12,7 @@
         {/each}
     </div>
     <div style="display: flex; flex-direction: column; padding-left: 40px">
+        <h2>Интервалы</h2>
         {#each $storage.intervals as { name, halfs}}
             <div style="display: flex">
                 <div style="flex: 1">

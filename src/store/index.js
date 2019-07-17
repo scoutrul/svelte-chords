@@ -313,7 +313,8 @@ let metaState = {
         gamma: [2, 2, 1, 2, 2, 2, 1]
       }
     ],
-    currentChord: "A",
+    currentKey: "A",
+    currentChord: "A minor",
     currentLad: "minor",
 };
 
@@ -324,12 +325,20 @@ function createMeta() {
 		subscribe,
         onChangeLad(lad) { 
             update(state => {
-                return {...state, currentLad: lad}
+                return {
+                    ...state, 
+                    currentLad: lad,
+                    currentChord: state.currentKey + ' ' + lad,
+                }
             }
         )},
-        onChangeChord(chord){
+        onChangeKey(key){
             update(state => {
-                return {...state, currentChord: chord}
+                return {
+                    ...state, 
+                    currentKey: key,
+                    currentChord: key + ' ' + state.currentLad,
+                }
             }
         )},
     };

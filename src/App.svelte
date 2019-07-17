@@ -4,7 +4,7 @@
 
 <script>
   import Gamma from "./Gamma/index.svelte";
-  import MetaInfo from './MetaInfo.svelte';
+  import MetaInfo from './MetaInfo/MetaInfo.svelte';
 
 // TSD
 // тоника субдоминанта доминанта
