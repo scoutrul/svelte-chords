@@ -1,6 +1,17 @@
 import { writable } from 'svelte/store';
 
 let metaState = {
+    notes: ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#","A", "A#", "H"],
+    lads: [
+        {
+            name: "minor",
+            gamma: [2, 1, 2, 2, 1, 2, 2]
+        },
+        {
+            name: "major",
+            gamma: [2, 2, 1, 2, 2, 2, 1]
+        }
+    ],
     pitches: {
         minor: [
             {
@@ -302,16 +313,44 @@ let metaState = {
             name: "Чистая октава",
         },
     ],
-    harmony: ["A", "A#", "H", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"],
-    lads: [
-      {
-        name: "minor",
-        gamma: [2, 1, 2, 2, 1, 2, 2]
-      },
-      {
-        name: "major",
-        gamma: [2, 2, 1, 2, 2, 2, 1]
-      }
+    octaves: [
+        {
+            order: 1,
+            name: 'Субконтроктава'
+        },
+        {
+            order: 2,
+            name: 'Контроктава'
+        },
+        {
+            order: 3,
+            name: 'Большая октава'
+        },
+        {
+            order: 4,
+            name: 'Малая октава'
+        },
+        {
+            order: 5,
+            name: 'Первая октава'
+        },
+        {
+            order: 6,
+            name: 'Вторая октава'
+        },
+        {
+            order: 7,
+            name: 'Третья октава'
+        },
+        {
+            order: 8,
+            name: 'Четвёртая октава'
+        },
+        {
+            order: 9,
+            name: 'Пятая октава'
+        },
+        
     ],
     currentKey: "A",
     currentChord: "A minor",

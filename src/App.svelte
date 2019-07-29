@@ -1,5 +1,4 @@
 <MetaInfo/>
-
 <Gamma/>
 
 <script>
