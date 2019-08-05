@@ -350,7 +350,6 @@ let metaState = {
             order: 9,
             name: 'Пятая октава'
         },
-        
     ],
     currentKey: "A",
     currentChord: "A minor",

@@ -3,7 +3,7 @@
     <button class={getLadButtonStyle('minor')} on:mousedown={e => storage.onChangeLad('minor')}>minor</button>
     <button class={getLadButtonStyle('major')} on:mousedown={e => storage.onChangeLad('major')}>major</button>
     <div>
-        {#each $storage.harmony as key}
+        {#each $storage.notes as key}
             <button class={getChordButtonStyles(key)} on:mousedown={e => storage.onChangeKey(key)}>{key}</button>
         {/each}
     </div>

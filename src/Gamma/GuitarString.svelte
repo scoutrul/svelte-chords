@@ -7,6 +7,7 @@
     import { steps__styles, steps__cell, steps__first, steps__container, getStepStyles } from '~/styles/index.js';
     import emotion from 'emotion/dist/emotion.umd.min.js';
     const { cx } = emotion;
+    
     export let key;
     export let offset;
 
@@ -14,7 +15,7 @@
         let { currentKey } = $storage; 
         //todo  отрисовать ступени относительно аккорда
         
-        let harmony = [...$storage.harmony, ...$storage.harmony];
+        let harmony = [...$storage.notes, ...$storage.notes];
         let indexOf = harmony.indexOf(key);
         return harmony[--order + indexOf];
     };
